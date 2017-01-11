@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from sys import argv
+
 def GenerateToehold(mirna):
     """
     Finds an RNA sequence that will unfold in the presence of the MiRNA sequence given as an argument.
@@ -36,11 +38,18 @@ def GenerateToehold(mirna):
     
     return final
 
-# If run as a script
-if __name__ == '__main__':
-    seq = input("Enter the MiRNA sequence you want to target:")
-    print(GenerateToehold(seq))
-    
-    # Prevent window from closing if run from a file explorer.
-    input("Press enter to quit...")
+
+if __name__ == "__main__":
+    if argv[1] == '-s':
+        # If run from the command line with the '-s' flag, use the following sequence to generate a toehold switch.
+        print(GenerateToehold(argv[2]))
+    else if argv[1] == '-h' or argv[1] == '--help':
+        # If a help flag is passed as the first argument, return usage information
+        print("Usage:\n {0} [-s 'MiRNA sequence']".format(argv[0]))
+    else:
+        # If run from the command line with no options or if run from a file explorer
+        seq = input("Enter the MiRNA sequence you want to target:")
+        print(GenerateToehold(seq))
+        # Prevent window from closing if run from a file explorer
+        input("Press enter to quit...")
     
